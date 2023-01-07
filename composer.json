@@ -1,0 +1,27 @@
+{
+  "name": "maina-david/multi-shortcode-mpesa",
+  "description": "Multiple shortcode mpesa integration",
+  "keywords": [
+    "mpesa",
+    "c2b",
+    "b2c",
+    "mpesa-express",
+    "balance",
+    "api"
+  ],
+  "homepage": "https://github.com/maina-david/multi-shortcode-mpesa-php",
+  "type": "library",
+  "license": "MIT",
+  "require": {
+    "php": ">=7.1",
+    "guzzlehttp/guzzle": "^6.0 || ^7.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "MainaDavid\\MultiShortcodeMpesa\\": "src/"
+    }
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^9.5"
+  }
+}
