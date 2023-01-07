@@ -11,7 +11,7 @@ class b2cTest extends TestCase
      *
      * @return void
      */
-    public function test_example()
+    public function can_send_b2c()
     {
         $response = $this->get('/');
 
