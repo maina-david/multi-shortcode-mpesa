@@ -32,7 +32,7 @@ php artisan vendor:publish --provider="MainaDavid\MultiShortcodeMpesa\MpesaServi
 
 You can overwrite the default urls in config/multi-shortcode-mpesa.php file.
 
-Clear your config cache. This package requires access to the permission config. Generally it's bad practice to do config-caching in a development environment. If you've been caching configurations locally, clear your config cache with either of these commands:
+Clear your config cache. This package requires access to the multi-shortcode-mpesa config. Generally it's bad practice to do config-caching in a development environment. If you've been caching configurations locally, clear your config cache with either of these commands:
 
 ```bash
  php artisan optimize:clear
