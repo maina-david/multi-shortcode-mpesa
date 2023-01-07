@@ -28,6 +28,18 @@ class MpesaServiceProvider extends ServiceProvider
     }
 
     /**
+     * It merges the contents of the config file in the package with the config file in the Laravel
+     * application
+     */
+    public function register()
+    {
+        $this->mergeConfigFrom(
+            __DIR__ . '/../config/multi-shortcode-mpesa.php',
+            'config'
+        );
+    }
+
+    /**
      * Returns existing migration file if found, else uses the current timestamp.
      *
      * @return string
