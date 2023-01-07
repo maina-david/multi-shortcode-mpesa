@@ -56,6 +56,62 @@ The SDK needs to be instantiated using one of your shortcode saved in the short_
 - initiator_name.
 - initiator_password.
 
+### Example saving a shortcode to the database
+
+```php
+use MainaDavid\MultiShortcodeMpesa\Models\ShortCode;
+
+    /**
+     * It validates the request, creates a new shortcode object, encrypts the sensitive data and saves it
+     * to the database
+     *
+     * @param Request request The request object.
+     *
+     * @return A JSON response with a success message.
+     */
+    public function storeShortCode(Request $request)
+    {
+        /* Validating the request. */
+        $request->validate([
+            'environment' => 'required|in:sandbox,production',
+            'direction' => 'required|in:c2b,b2c',
+            'shortcode' => 'required|integer',
+            'consumer_key' => 'required',
+            'consumer_secret' => 'required',
+            'pass_key' => 'required_if:direction,c2b',
+            'initiator_name' => 'required_if:direction,b2c',
+            'initiator_password' => 'required_if:direction,b2c',
+        ]);
+
+        $shortcode = new ShortCode();
+        $shortcode->environment = $request->environment; //sandbox or environment
+        $shortcode->direction = $request->direction; // c2b or b2c
+        $shortcode->shortcode = $request->shortcode; // mpesa shortcode
+        $shortcode->consumer_key = encrypt($request->consumer_key); // shortcode consumer key
+        $shortcode->consumer_secret = encrypt($request->consumer_secret); // shortcode consumer secret
+        /* Checking if the request has a pass_key and if it does, it encrypts it and saves it to the database. */
+        if ($request->has('pass_key')) {
+            $shortcode->pass_key = encrypt($request->pass_key); // not required for b2c
+        }
+        /* Checking if the request has an initiator name and if it does, it encrypts it and saves it to the
+        database. */
+        if ($request->has('initiator_name')) {
+            $shortcode->initiator_name = encrypt($request->initiator_name);  // shortcode api initiator
+        }
+        /* Checking if the request has an initiator password and if it does, it encrypts it and saves it to the
+        database. */
+        if ($request->has('initiator_password')) {
+            $shortcode->initiator_password = encrypt($request->initiator_password); // shortcode initiator password
+        }
+        $shortcode->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Shortcode saved successfully!'
+        ], 200);
+    }
+```
+
 > You can use this SDK for either production or sandbox apps. For sandbox, the shortcode environment is **ALWAYS** `sandbox`
 
 > Authorization is done by the SDK for both sandbox and production environments. You can use multiple shortcodes with different environments seamlessly.
