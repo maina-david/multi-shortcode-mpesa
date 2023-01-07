@@ -48,7 +48,7 @@ Run the migrations: After the config and migration have been published and confi
 
 ## Usage
 
-The SDK needs to be instantiated using one of your shortcode saved in the short_codes_table and expects following values must be encrypted when storing them in the database for security reasons. It will decrypt the values, if unable it will throw an error.
+The SDK needs to be instantiated using one of your shortcode saved in the short_codes_table and expects following values to be encrypted when storing them in the database for security reasons. It will decrypt the values, if unable it will throw an error.
 
 - consumer_key.
 - consumer_secret.
