@@ -21,7 +21,16 @@
       "MainaDavid\\MultiShortcodeMpesa\\": "src/"
     }
   },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
   "require-dev": {
     "phpunit/phpunit": "^9.5"
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "MainaDavid\\MultiShortcodeMpesa\\MpesaServiceProvider"
+      ]
+    }
   }
 }
