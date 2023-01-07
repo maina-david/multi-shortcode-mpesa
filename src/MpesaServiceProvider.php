@@ -2,19 +2,13 @@
 
 namespace MainaDavid\MultiShortcodeMpesa;
 
-use David\MultiShortcodeMpesa\Console\Commands\InstallMultiMpesaPackage;
 use Illuminate\Support\ServiceProvider;
 
 class MpesaServiceProvider extends ServiceProvider
 {
     public function boot()
     {
-        if ($this->app->runningInConsole()) {
-            $this->offerPublishing();
-            $this->commands([
-                InstallMultiMpesaPackage::class,
-            ]);
-        }
+        $this->offerPublishing();
     }
 
     /**
