@@ -5,7 +5,7 @@ namespace MainaDavid\MultiShortcodeMpesa;
 use David\MultiShortcodeMpesa\Models\ShortCode;
 use Exception;
 use Illuminate\Support\Carbon;
-use David\MultiShortcodeMpesa\traits\MpesaHelper;
+use MainaDavid\MultiShortcodeMpesa\traits\MpesaHelper;
 
 class Mpesa extends Service
 {
