@@ -17,11 +17,11 @@ class MpesaServiceProvider extends ServiceProvider
     protected function offerPublishing()
     {
         $this->publishes([
-            __DIR__ . '/../config/multi-shortcode-mpesa.php' => config_path('multi-shortcode-mpesa.php')
-        ], 'multi-shortcode-mpesa-config');
+            __DIR__ . '/../config/multi-shortcode-mpesa.php' => config_path('multi-shortcode-mpesa.php'),
+        ], 'config');
 
         $this->publishes([
-            __DIR__ . '/../database/migrations/' => database_path('migrations')
-        ], 'multi-shortcode-mpesa-migrations');
+            __DIR__ . '/../database/migrations/create_short_codes_table.stub' => $this->getMigrationFileName('create_short_codes_table.php'),
+        ], 'migrations');
     }
 }
