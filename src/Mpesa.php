@@ -163,6 +163,9 @@ class Mpesa extends Service
         if ($response->successful()) {
             return $response['access_token'];
         }
+        if ($response->failed()) {
+            throw new Exception("Invalid credentials!", 1);
+        }
     }
 
     /* Used to register the callback urls. */
