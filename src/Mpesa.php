@@ -267,11 +267,13 @@ class Mpesa extends Service
      */
     public function b2c($commandID, $amount, $phonenumber, $remarks)
     {
+        /* Checking if the direction is not equal to b2c, if it is not, it will return an error message. */
         if ($this->direction !== 'b2c') {
             return $this->error('Shortcode does not support Business to Customer!');
         }
-
-        if (in_array($commandID, ['BusinessPayment', 'SalaryPayment', 'PromotionPayment'])) {
+        /* Checking if the commandID is in the array of BusinessPayment, SalaryPayment, PromotionPayment. If it
+        is not, it will return an error. */
+        if (!in_array($commandID, ['BusinessPayment', 'SalaryPayment', 'PromotionPayment'])) {
             return $this->error('Invalid commandID!');
         }
         $data = [
