@@ -268,7 +268,7 @@ class Mpesa extends Service
     public function b2c($commandID, $amount, $phonenumber, $remarks)
     {
         if ($this->direction !== 'b2c') {
-            return $this->error('Shortcode does not support Business to customer!');
+            return $this->error('Shortcode does not support Business to Customer!');
         }
         $data = [
             'InitiatorName' => decrypt($this->initiator_name),
@@ -296,7 +296,7 @@ class Mpesa extends Service
     public function transactionStatus($TransactionID)
     {
         if ($this->direction !== 'b2c') {
-            return $this->error('Shortcode does not support Business to customer!');
+            return $this->error('Shortcode does not support Business to Customer!');
         }
         $data = [
             'Initiator' => decrypt($this->initiator_name),
@@ -325,7 +325,7 @@ class Mpesa extends Service
     public function reverseTransaction($TransactionID)
     {
         if ($this->direction !== 'b2c') {
-            return $this->error('Shortcode does not support Business to customer!');
+            return $this->error('Shortcode does not support Business to Customer!');
         }
         $data = [
             'Initiator' => decrypt($this->initiator_name),
