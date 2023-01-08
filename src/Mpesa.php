@@ -76,12 +76,13 @@ class Mpesa extends Service
 
     public function __construct($shortcode)
     {
+        $Orgshortcode = $shortcode;
         /* Getting the shortcode from the database. */
-        $short_code = ShortCode::where('shortcode', $shortcode)->first();
+        $short_code = ShortCode::where('shortcode', $Orgshortcode)->first();
 
         /* Checking if the shortcode exists in the database. */
         if (!$short_code) {
-            throw new Exception("$shortcode Shortcode not found!", 1);
+            throw new Exception("$short_code Shortcode not found!", 1);
         }
         /* Checking if the environment is sandbox or not. If it is sandbox, it sets the base url to the sandbox
             url. If it is not sandbox, it sets the base url to the production url. */
@@ -96,7 +97,7 @@ class Mpesa extends Service
         $this->environment = $short_code->environment;
 
         /* Assigning the value of the `` variable to the `->shortcode` variable. */
-        $this->shortcode = $shortcode;
+        $this->shortcode = $Orgshortcode;
 
         /* Assigning the value of the `direction` column of the `shortcodes` table to the `direction` variable. */
         $this->direction = $short_code->direction;
