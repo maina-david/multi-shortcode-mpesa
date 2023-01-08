@@ -215,6 +215,7 @@ class Mpesa extends Service
      */
     public function stkPush($phonenumber, $amount, $reference = '', $description = '')
     {
+        /* Checking if the direction is not equal to c2b, then it will return an error message. */
         if ($this->direction !== 'c2b') {
             return $this->error('Shortcode does not support Customer to Business!');
         }
@@ -243,6 +244,7 @@ class Mpesa extends Service
      */
     public function stkPushQuery($CheckoutRequestID)
     {
+        /* Checking if the direction is not equal to c2b, then it will return an error message. */
         if ($this->direction !== 'c2b') {
             return $this->error('Shortcode does not support Customer to Business!');
         }
