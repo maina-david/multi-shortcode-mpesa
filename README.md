@@ -84,7 +84,7 @@ use MainaDavid\MultiShortcodeMpesa\Models\ShortCode;
         ]);
 
         $shortcode = new ShortCode();
-        $shortcode->environment = $request->environment; //sandbox or environment
+        $shortcode->environment = $request->environment; //sandbox or production
         $shortcode->direction = $request->direction; // c2b or b2c
         $shortcode->shortcode = $request->shortcode; // mpesa shortcode
         $shortcode->consumer_key = encrypt($request->consumer_key); // shortcode consumer key
