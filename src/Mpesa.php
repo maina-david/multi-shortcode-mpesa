@@ -270,6 +270,10 @@ class Mpesa extends Service
         if ($this->direction !== 'b2c') {
             return $this->error('Shortcode does not support Business to Customer!');
         }
+
+        if (in_array($commandID, ['BusinessPayment', 'SalaryPayment', 'PromotionPayment'])) {
+            return $this->error('Invalid commandID!');
+        }
         $data = [
             'InitiatorName' => decrypt($this->initiator_name),
             'SecurityCredential' => $this->generate_security_credentials($this->environment, decrypt($this->initiator_password)),
