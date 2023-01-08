@@ -236,7 +236,7 @@ $result = $mpesa->reverseTransaction($TransactionID);
 print_r($result);
 ```
 
-###Example SDK response
+### Example SDK response
 
 The SDK will return a response with either success or error in the below format.
 #### Success response
