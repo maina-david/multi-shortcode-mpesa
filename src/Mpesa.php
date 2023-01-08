@@ -6,6 +6,7 @@ use Exception;
 use Illuminate\Support\Carbon;
 use MainaDavid\MultiShortcodeMpesa\Models\ShortCode;
 use MainaDavid\MultiShortcodeMpesa\traits\MpesaHelper;
+use Illuminate\Support\Facades\Http;
 
 class Mpesa extends Service
 {
