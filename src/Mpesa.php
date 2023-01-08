@@ -103,18 +103,18 @@ class Mpesa extends Service
         $this->direction = $short_code->direction;
 
         /* Decrypting the consumer key that is stored in the database. */
-        $this->consumer_key = decrypt($short_code->consumer_key);
+        $this->consumer_key = app('encrypter')->decrypt($short_code->consumer_key);
 
         /* Decrypting the consumer secret that is stored in the database. */
-        $this->consumer_secret = decrypt($short_code->consumer_secret);
+        $this->consumer_secret = app('encrypter')->decrypt($short_code->consumer_secret);
 
-        $this->pass_key = decrypt($short_code->pass_key);
+        $this->pass_key = app('encrypter')->decrypt($short_code->pass_key);
 
         /* Decrypting the initiator name that is stored in the database. */
-        $this->initiator_name = decrypt($short_code->initiator_name);
+        $this->initiator_name = app('encrypter')->decrypt($short_code->initiator_name);
 
         /* Decrypting the initiator password that is stored in the database. */
-        $this->initiator_password = decrypt($short_code->initiator_password);
+        $this->initiator_password = app('encrypter')->decrypt($short_code->initiator_password);
 
         /* Concatenating the base url with the url of the safaricom api that is used to generate the access
         token. */
