@@ -160,7 +160,7 @@ class Mpesa extends Service
         $response = Http::withBasicAuth(decrypt($this->consumer_key), decrypt($this->consumer_secret))
             ->get($this->authUrl);
 
-        if ($response->successfull()) {
+        if ($response->successful()) {
             return $response['access_token'];
         }
     }
