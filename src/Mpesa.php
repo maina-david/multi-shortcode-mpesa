@@ -6,6 +6,8 @@ use Exception;
 use Illuminate\Support\Carbon;
 use MainaDavid\MultiShortcodeMpesa\Models\ShortCode;
 use MainaDavid\MultiShortcodeMpesa\traits\MpesaHelper;
+use Illuminate\Contracts\Encryption\DecryptException;
+use Illuminate\Support\Facades\Crypt;;
 
 class Mpesa extends Service
 {
@@ -102,6 +104,11 @@ class Mpesa extends Service
         $this->direction = $ShortCode->direction;
 
         /* Decrypting the consumer key that is stored in the database. */
+        try {
+            $this->consumer_key = Crypt::decryptString($ShortCode->consumer_key);
+        } catch (DecryptException $e) {
+            throw $e;
+        }
         $this->consumer_key = decrypt($ShortCode->consumer_key);
 
         /* Decrypting the consumer secret that is stored in the database. */
