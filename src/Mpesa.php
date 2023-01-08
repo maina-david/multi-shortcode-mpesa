@@ -77,15 +77,15 @@ class Mpesa extends Service
     public function __construct($shortcode)
     {
         /* Getting the shortcode from the database. */
-        $ShortCode = ShortCode::where('shortcode', $shortcode)->first();
+        $mpesa_shortcode = ShortCode::where('shortcode', $shortcode)->first();
 
         /* Checking if the shortcode exists in the database. */
-        if ($ShortCode) {
-            return $ShortCode;
+        if ($mpesa_shortcode) {
+            return $mpesa_shortcode;
         }
         /* Checking if the environment is sandbox or not. If it is sandbox, it sets the base url to the sandbox
             url. If it is not sandbox, it sets the base url to the production url. */
-        if ($ShortCode->environment === 'sandbox') {
+        if ($mpesa_shortcode->environment === 'sandbox') {
             $this->baseUrl = "https://" . self::BASE_SANDBOX_DOMAIN;
         } else {
             $this->baseUrl = "https://api." . self::BASE_DOMAIN;
@@ -93,27 +93,27 @@ class Mpesa extends Service
 
         /* Assigning the value of the `environment` column of the `shortcodes` table to the `environment`
         variable. */
-        $this->environment = $ShortCode->environment;
+        $this->environment = $mpesa_shortcode->environment;
 
         /* Assigning the value of the `` variable to the `->shortcode` variable. */
         $this->shortcode = $shortcode;
 
         /* Assigning the value of the `direction` column of the `shortcodes` table to the `direction` variable. */
-        $this->direction = $ShortCode->direction;
+        $this->direction = $mpesa_shortcode->direction;
 
         /* Decrypting the consumer key that is stored in the database. */
-        $this->consumer_key = decrypt($ShortCode->consumer_key);
+        $this->consumer_key = decrypt($mpesa_shortcode->consumer_key);
 
         /* Decrypting the consumer secret that is stored in the database. */
-        $this->consumer_secret = decrypt($ShortCode->consumer_secret);
+        $this->consumer_secret = decrypt($mpesa_shortcode->consumer_secret);
 
-        $this->pass_key = decrypt($ShortCode->pass_key);
+        $this->pass_key = decrypt($mpesa_shortcode->pass_key);
 
         /* Decrypting the initiator name that is stored in the database. */
-        $this->initiator_name = decrypt($ShortCode->initiator_name);
+        $this->initiator_name = decrypt($mpesa_shortcode->initiator_name);
 
         /* Decrypting the initiator password that is stored in the database. */
-        $this->initiator_password = decrypt($ShortCode->initiator_password);
+        $this->initiator_password = decrypt($mpesa_shortcode->initiator_password);
 
         /* Concatenating the base url with the url of the safaricom api that is used to generate the access
         token. */
