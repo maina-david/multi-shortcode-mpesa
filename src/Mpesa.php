@@ -103,18 +103,18 @@ class Mpesa extends Service
         $this->direction = $short_code->direction;
 
         /* Decrypting the consumer key that is stored in the database. */
-        $this->consumer_key = app('encrypter')->decrypt($short_code->consumer_key);
+        $this->consumer_key = $short_code->consumer_key;
 
         /* Decrypting the consumer secret that is stored in the database. */
-        $this->consumer_secret = app('encrypter')->decrypt($short_code->consumer_secret);
+        $this->consumer_secret = $short_code->consumer_secret;
 
-        $this->pass_key = app('encrypter')->decrypt($short_code->pass_key);
+        $this->pass_key = $short_code->pass_key;
 
         /* Decrypting the initiator name that is stored in the database. */
-        $this->initiator_name = app('encrypter')->decrypt($short_code->initiator_name);
+        $this->initiator_name = $short_code->initiator_name;
 
         /* Decrypting the initiator password that is stored in the database. */
-        $this->initiator_password = app('encrypter')->decrypt($short_code->initiator_password);
+        $this->initiator_password = $short_code->initiator_password;
 
         /* Concatenating the base url with the url of the safaricom api that is used to generate the access
         token. */
@@ -156,7 +156,7 @@ class Mpesa extends Service
      */
     public function generateAccessToken()
     {
-        $response = Http::withBasicAuth($this->consumer_key, $this->consumer_secret)
+        $response = Http::withBasicAuth(decrypt($this->consumer_key), decrypt($this->consumer_secret))
             ->get($this->authUrl);
 
         if ($response->successfull()) {
@@ -185,8 +185,8 @@ class Mpesa extends Service
     public function accountBalance()
     {
         $data = [
-            'Initiator' => $this->initiator_name,
-            'SecurityCredential' => $this->generate_security_credentials($this->environment, $this->initiator_password),
+            'Initiator' => decrypt($this->initiator_name),
+            'SecurityCredential' => $this->generate_security_credentials($this->environment, decrypt($this->initiator_password)),
             'CommandID' => 'AccountBalance',
             'PartyA' => $this->shortcode,
             'IdentifierType' => '4',
@@ -216,7 +216,7 @@ class Mpesa extends Service
         }
         $data = [
             'BusinessShortCode' => $this->shortcode,
-            'Password' => $this->LipaNaMpesaPassword($this->shortcode, $this->pass_key),
+            'Password' => $this->LipaNaMpesaPassword($this->shortcode, decrypt($this->initiator_password)),
             'Timestamp' => Carbon::rawParse('now')->format('YmdHms'),
             'TransactionType' => 'CustomerPayBillOnline',
             'Amount' => (int)$amount,
@@ -241,7 +241,7 @@ class Mpesa extends Service
     {
         $data = [
             'BusinessShortCode' => $this->shortcode,
-            'Password' => $this->LipaNaMpesaPassword($this->shortcode, $this->pass_key),
+            'Password' => $this->LipaNaMpesaPassword($this->shortcode, decrypt($this->pass_key)),
             'Timestamp' => Carbon::rawParse('now')->format('YmdHms'),
             'CheckoutRequestID' => $CheckoutRequestID
         ];
@@ -262,7 +262,7 @@ class Mpesa extends Service
     {
         $data = [
             'InitiatorName' => $this->initiator_name,
-            'SecurityCredential' => $this->generate_security_credentials($this->environment, $this->initiator_password),
+            'SecurityCredential' => $this->generate_security_credentials($this->environment, decrypt($this->initiator_password)),
             'CommandID' => 'BusinessPayment',
             'Amount' => (int)$amount,
             'PartyA' => $this->shortcode,
@@ -286,8 +286,8 @@ class Mpesa extends Service
     public function transactionStatus($TransactionID)
     {
         $data = [
-            'Initiator' => $this->initiator_name,
-            'SecurityCredential' => $this->generate_security_credentials($this->environment, $this->initiator_password),
+            'Initiator' => decrypt($this->initiator_name),
+            'SecurityCredential' => $this->generate_security_credentials($this->environment, decrypt($this->initiator_password)),
             'CommandID' => 'TransactionStatusQuery',
             'TransactionID' => $TransactionID,
             'PartyA' => $this->shortcode,
@@ -312,8 +312,8 @@ class Mpesa extends Service
     public function reverseTransaction($TransactionID)
     {
         $data = [
-            'Initiator' => $this->initiator_name,
-            'SecurityCredential' => $this->generate_security_credentials($this->environment, $this->initiator_password),
+            'Initiator' => decrypt($this->initiator_name),
+            'SecurityCredential' => $this->generate_security_credentials($this->environment, decrypt($this->initiator_password)),
             'CommandID' => 'TransactionReversal',
             'TransactionID' => $TransactionID,
             'ReceiverParty' => $this->shortcode,
