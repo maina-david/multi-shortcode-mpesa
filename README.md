@@ -195,7 +195,7 @@ $phonenumber = '0722123456';
 // Instantiate the class
 $mpesa  = new Mpesa($shortcode);
 
-$result = $mpesa->b2c($amount, $phonenumber);
+$result = $mpesa->b2c($commandID, $amount, $phonenumber, $remarks);
 
 print_r($result);
 ```
