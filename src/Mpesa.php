@@ -81,7 +81,7 @@ class Mpesa extends Service
 
         /* Checking if the shortcode exists in the database. */
         if (!$short_code) {
-            throw new Exception("Shortcode not found!", 1);
+            throw new Exception("$shortcode Shortcode not found!", 1);
         }
         /* Checking if the environment is sandbox or not. If it is sandbox, it sets the base url to the sandbox
             url. If it is not sandbox, it sets the base url to the production url. */
