@@ -200,6 +200,20 @@ $result = $mpesa->b2c($commandID, $amount, $phonenumber, $remarks);
 print_r($result);
 ```
 
+#### Success response
+
+```json
+{
+  "status": "success",
+  "data": {
+    "ConversationID": "AG_20230108_2010364679d05de418cd",
+    "OriginatorConversationID": "12425-164354829-1",
+    "ResponseCode": "0",
+    "ResponseDescription": "Accept the service request successfully."
+  }
+}
+```
+
 ### Check the status of a transaction
 
 ```php
