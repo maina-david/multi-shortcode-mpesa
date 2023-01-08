@@ -80,7 +80,7 @@ class Mpesa extends Service
         $short_code = ShortCode::where('shortcode', $shortcode)->first();
 
         /* Checking if the shortcode exists in the database. */
-        if ($short_code) {
+        if (!$short_code) {
             throw new Exception("Shortcode not found!", 1);
         }
         /* Checking if the environment is sandbox or not. If it is sandbox, it sets the base url to the sandbox
