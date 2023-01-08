@@ -129,11 +129,12 @@ use MainaDavid\MultiShortcodeMpesa\Models\ShortCode;
 
   - `CheckoutRequestID`: The unique identifier of the processed checkout transaction request. `REQUIRED`
 
-- `b2c($amount, $phonenumber, $remarks = '')`: Sends money from your business to a customer
+- `b2c($commandID, $amount, $phonenumber, $remarks)`: Sends money from your business to a customer
 
+  - `commandID`: Unique command that specifies B2C transaction type [SalaryPayment,BusinessPayment,PromotionPayment]. `REQUIRED`
   - `phonenumber`: Customer mobile number to receive the amount. `REQUIRED`
   - `amount`: The amount of money being sent to the customer. Only whole numbers are supported. `REQUIRED`
-  - `remarks`: Any additional information to be associated with the transaction. `OPTIONAL`
+  - `remarks`: Any additional information to be associated with the transaction. `REQUIRED`
 
 - `transactionStatus($TransactionID)`: It returns the status of a transaction
 

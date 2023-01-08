@@ -216,7 +216,7 @@ class Mpesa extends Service
     public function stkPush($phonenumber, $amount, $reference = '', $description = '')
     {
         if ($this->direction !== 'c2b') {
-            return $this->error('This shortcode does not support stk push!');
+            return $this->error('Shortcode does not support Customer to Business!');
         }
         $data = [
             'BusinessShortCode' => $this->shortcode,
@@ -243,6 +243,9 @@ class Mpesa extends Service
      */
     public function stkPushQuery($CheckoutRequestID)
     {
+        if ($this->direction !== 'c2b') {
+            return $this->error('Shortcode does not support Customer to Business!');
+        }
         $data = [
             'BusinessShortCode' => $this->shortcode,
             'Password' => $this->LipaNaMpesaPassword($this->shortcode, decrypt($this->pass_key)),
@@ -262,12 +265,15 @@ class Mpesa extends Service
      * 
      * @return The response from the API.
      */
-    public function b2c($amount, $phonenumber, $remarks = '')
+    public function b2c($commandID, $amount, $phonenumber, $remarks)
     {
+        if ($this->direction !== 'b2c') {
+            return $this->error('Shortcode does not support Business to customer!');
+        }
         $data = [
             'InitiatorName' => decrypt($this->initiator_name),
             'SecurityCredential' => $this->generate_security_credentials($this->environment, decrypt($this->initiator_password)),
-            'CommandID' => 'BusinessPayment',
+            'CommandID' => $commandID,
             'Amount' => (int)$amount,
             'PartyA' => $this->shortcode,
             'PartyB' => $this->phoneNumberValidator($phonenumber),
@@ -289,6 +295,9 @@ class Mpesa extends Service
      */
     public function transactionStatus($TransactionID)
     {
+        if ($this->direction !== 'b2c') {
+            return $this->error('Shortcode does not support Business to customer!');
+        }
         $data = [
             'Initiator' => decrypt($this->initiator_name),
             'SecurityCredential' => $this->generate_security_credentials($this->environment, decrypt($this->initiator_password)),
@@ -315,6 +324,9 @@ class Mpesa extends Service
      */
     public function reverseTransaction($TransactionID)
     {
+        if ($this->direction !== 'b2c') {
+            return $this->error('Shortcode does not support Business to customer!');
+        }
         $data = [
             'Initiator' => decrypt($this->initiator_name),
             'SecurityCredential' => $this->generate_security_credentials($this->environment, decrypt($this->initiator_password)),
