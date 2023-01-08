@@ -220,7 +220,7 @@ class Mpesa extends Service
         }
         $data = [
             'BusinessShortCode' => $this->shortcode,
-            'Password' => $this->LipaNaMpesaPassword($this->shortcode, decrypt($this->initiator_password)),
+            'Password' => $this->LipaNaMpesaPassword($this->shortcode, decrypt($this->pass_key)),
             'Timestamp' => Carbon::rawParse('now')->format('YmdHms'),
             'TransactionType' => 'CustomerPayBillOnline',
             'Amount' => (int)$amount,
@@ -265,7 +265,7 @@ class Mpesa extends Service
     public function b2c($amount, $phonenumber, $remarks = '')
     {
         $data = [
-            'InitiatorName' => $this->initiator_name,
+            'InitiatorName' => decrypt($this->initiator_name),
             'SecurityCredential' => $this->generate_security_credentials($this->environment, decrypt($this->initiator_password)),
             'CommandID' => 'BusinessPayment',
             'Amount' => (int)$amount,
