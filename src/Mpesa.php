@@ -178,7 +178,7 @@ class Mpesa extends Service
             'ValidationURL' => config('multi-shortcode-mpesa.c2b_validation_url')
         ];
 
-        return $this->success($this->MpesaRequest($this->balanceUrl, $data));
+        return $this->MpesaRequest($this->balanceUrl, $data);
     }
 
     /**
@@ -199,7 +199,7 @@ class Mpesa extends Service
             'ResultURL' => config('multi-shortcode-mpesa.balance_result_url')
         ];
 
-        return $this->success($this->MpesaRequest($this->balanceUrl, $data));
+        return $this->MpesaRequest($this->balanceUrl, $data);
     }
 
     /**
@@ -231,7 +231,7 @@ class Mpesa extends Service
             'AccountReference' => $reference,
             'TransactionDesc' => $description
         ];
-        return $this->success($this->MpesaRequest($this->stkPushUrl, $data));
+        return $this->MpesaRequest($this->stkPushUrl, $data);
     }
 
     /**
@@ -250,7 +250,7 @@ class Mpesa extends Service
             'CheckoutRequestID' => $CheckoutRequestID
         ];
 
-        return $this->success($this->MpesaRequest($this->queryStkUrl, $data));
+        return $this->MpesaRequest($this->queryStkUrl, $data);
     }
 
     /**
@@ -277,7 +277,7 @@ class Mpesa extends Service
             'Occasion' => ''
         ];
 
-        return $this->success($this->MpesaRequest($this->b2cUrl, $data));
+        return $this->MpesaRequest($this->b2cUrl, $data);
     }
 
     /**
@@ -302,7 +302,7 @@ class Mpesa extends Service
             'Occasion' => ''
         ];
 
-        return $this->success($this->MpesaRequest($this->statusqueryUrl, $data));
+        return $this->MpesaRequest($this->statusqueryUrl, $data);
     }
 
     /**
@@ -328,7 +328,7 @@ class Mpesa extends Service
             'Occasion' => ''
         ];
 
-        return $this->success($this->MpesaRequest($this->reversalUrl, $data));
+        return $this->MpesaRequest($this->reversalUrl, $data);
     }
 
     /**
@@ -344,6 +344,6 @@ class Mpesa extends Service
     {
         $response = Http::withToken($this->generateAccessToken())->post($url, $data);
 
-        return $response;
+        return $response->successful() ? $this->success($response) : $this->error($response->json());
     }
 }
