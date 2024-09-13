@@ -178,7 +178,7 @@ class Mpesa extends Service
             'ValidationURL' => config('multi-shortcode-mpesa.c2b_validation_url')
         ];
 
-        return $this->MpesaRequest($this->balanceUrl, $data);
+        return $this->MpesaRequest($this->registerUrl, $data);
     }
 
     /**
